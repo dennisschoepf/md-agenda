@@ -1,9 +1,5 @@
 #!/usr/bin/env node
-import {
-  getFilename,
-  getFilePathsWithExtension,
-  readMultipleFiles,
-} from './lib/fs';
+import { getFilePathsWithExtension, readMultipleFiles } from './lib/fs';
 import { getFrontmatterFromFile } from './lib/parse';
 import { validateAssignmentFrontmatter } from './lib/validate';
 import {
