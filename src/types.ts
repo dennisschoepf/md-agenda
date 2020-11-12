@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 export enum AssignmentStatus {
   'OPEN' = 'OPEN',
   'DONE' = 'DONE',
@@ -5,7 +7,7 @@ export enum AssignmentStatus {
 
 export interface Assignment {
   title: string;
-  deadline: Date;
+  deadline: DateTime;
   status: AssignmentStatus;
 }
 
@@ -17,6 +19,14 @@ export interface AssignmentFile {
 export interface File {
   path: string;
   fileContentBuffer: Buffer;
+}
+
+export interface FileWithFrontmatter extends File {
+  frontmatter: FrontmatterData;
+}
+
+export interface AssignmentFile extends FileWithFrontmatter {
+  assignmentData: Assignment;
 }
 
 export interface FrontmatterData {
