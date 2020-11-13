@@ -23,13 +23,11 @@ async function main() {
     ...file,
     frontmatter: getFrontmatterFromFile(file),
   }));
-  console.log(filesWithFrontmatter);
 
   // 2. Filter those who have frontmatter with title, deadline & status
   const filesWithAssignmentFrontmatter = filesWithFrontmatter.filter((file) =>
     validateAssignmentFrontmatter(file.frontmatter)
   );
-  console.log(filesWithAssignmentFrontmatter);
 
   // 3. Store the assignments somehow
   // TODO: Move the conversation somewhere else and make it more robust
@@ -37,12 +35,13 @@ async function main() {
     (file) => ({
       ...file,
       assignmentData: {
-        title: file.frontmatter.TITLE,
-        deadline: DateTime.fromISO(file.frontmatter.DEADLINE),
+        title: file.frontmatter.TITLE as string,
+        deadline: DateTime.fromISO(file.frontmatter.DEADLINE as string),
         status: file.frontmatter.STATUS as AssignmentStatus,
       },
     })
   );
+
   const assignments: Assignment[] = assignmentFiles
     .map((file) => file.assignmentData)
     .filter((assignment) => assignment.status === AssignmentStatus.OPEN);
@@ -58,7 +57,9 @@ async function main() {
   const beautifiedAssignments = sortedAssignments
     .map(
       ({ title, deadline }) =>
-        `WHEN?: ${JSON.stringify(deadline)} | WHAT?: ${title}`
+        `WHEN?: ${deadline
+          .setLocale('de')
+          .toLocaleString(DateTime.DATETIME_SHORT)} | WHAT?: ${title}`
     )
     .join('\n');
 
