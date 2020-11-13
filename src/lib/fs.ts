@@ -24,7 +24,3 @@ export async function readMultipleFiles(filePaths: string[]): Promise<File[]> {
     fileContentBuffer,
   }));
 }
-
-export function getFilename(filePath: string): string {
-  return path.basename(filePath, path.extname(filePath));
-}
